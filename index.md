@@ -5,19 +5,19 @@ UH OneRide provides a solution to those looking for a transportation alternative
 ## How It Works 
 First you must sign up with a valid hawaii.edu email account. Provide a name, profile image, location in which you wish to be picked up from, and some personal information like hobbies, interests, major etc.
 
-<img src="doc/uhoneride-signin.png" alt="Login/Signup Mockup" width=800 height=600/>
+<img src="doc/uhoneride-signin.png" alt="Login/Signup Mockup" width="800" height="600"/>
 
 By default everyone is a Rider, and can view a list of all drivers in the system. Each Driver would be represented by a card, with images, personal information, where they come from and what time, and other members of the carpool, as well as any pricing. If you find a Driver that matches your preferences, you can contact them via their UH emails.
 
-<img src="doc/uhoneride-find.png" alt="Driver List Mockup" width=800 height=600/>
+<img src="doc/uhoneride-find.png" alt="Driver List Mockup" width="800" height="600"/>
 
 You can request to be a Driver by providing additional information upon sign up or at a later date, like car identifiers and an image of the driver's license. After review by a site admin, your application will be either approved/denied. As a Driver, you can add/remove Riders from your carpool.
 
-<img src="doc/uhoneride-offer.png" alt="Driver Signup Mockup" width=800 height=600/>
+<img src="doc/uhoneride-offer.png" alt="Driver Signup Mockup" width="800" height="600"/>
 
 If you have an issue with another user or find a bug in our system, you can fill out a form. A site admin will review the form and act accordingly. 
 
-<img src="doc/uhoneride-contact.png" alt="Contact Mockup" width=800 height=600/>
+<img src="doc/uhoneride-contact.png" alt="Contact Mockup" width="800" height="600"/>
 
 ## Development and Progress
 ### Milestone 1 (Due Nov 21)
