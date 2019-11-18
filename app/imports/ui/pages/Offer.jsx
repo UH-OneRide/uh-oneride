@@ -1,49 +1,67 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
-import { Stuffs, StuffSchema } from '/imports/api/stuff/Stuff';
-import swal from 'sweetalert';
+import { Grid, Segment, Header } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
 import NumField from 'uniforms-semantic/NumField';
-import SelectField from 'uniforms-semantic/SelectField';
 import SubmitField from 'uniforms-semantic/SubmitField';
-import HiddenField from 'uniforms-semantic/HiddenField';
 import ErrorsField from 'uniforms-semantic/ErrorsField';
+import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import PropTypes from 'prop-types';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
+import SimpleSchema from 'simpl-schema';
+import { Offers } from '../../api/offer/Offer';
 
-/** Renders the Page for editing a single document. */
-class Offer extends React.Component {
+const formSchema = new SimpleSchema({
+  beginDate: String,
+  endDate: String,
+  destination: String,
+  estimatedArrival: String,
+  seats: Number,
+  price: Number,
+  car: String,
+  description: String,
+});
 
-  /** On successful submit, insert the data. */
-  submit(data) {
-    const { name, quantity, condition, _id } = data;
-    Stuffs.update(_id, { $set: { name, quantity, condition } }, (error) => (error ?
-        swal('Error', error.message, 'error') :
-        swal('Success', 'Item updated successfully', 'success')));
-  }
+/** Renders the Page for adding a document. */
+class AddOffer extends React.Component {
 
-  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
-  render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  /** On submit, insert the data. */
+  submit(data, formRef) {
+    const { beginDate, endDate, destination, estimatedArrival, seats, price, car, description } = data;
+    let owner = Meteor.user().username;
+    if (owner === '') {
+      owner = 'temp';
+    }
+    Offers.insert({ beginDate, endDate, destination, estimatedArrival, seats, price, car, description, owner },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item added successfully', 'success');
+          formRef.reset();
+        }
+      });
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  renderPage() {
+  render() {
+    let fRef = null;
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h1" textAlign="center">Offer a Ride</Header>
-            <AutoForm schema={StuffSchema} onSubmit={data => this.submit(data)} model={this.props.doc}>
+            <Header as="h2" textAlign="center">Offer A Ride</Header>
+            <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => this.submit(data, fRef)} >
               <Segment>
-                <TextField name='name'/>
-                <NumField name='quantity' decimal={false}/>
-                <SelectField name='condition'/>
+                <TextField name='beginDate'/>
+                <TextField name='endDate'/>
+                <TextField name='destination'/>
+                <TextField name='estimatedArrival'/>
+                <NumField name='seats' decimal={false}/>
+                <NumField name='price' decimal={true}/>
+                <TextField name='car'/>
+                <TextField name='description'/>
                 <SubmitField value='Submit'/>
                 <ErrorsField/>
-                <HiddenField name='owner' />
               </Segment>
             </AutoForm>
           </Grid.Column>
@@ -52,21 +70,4 @@ class Offer extends React.Component {
   }
 }
 
-/** Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use. */
-Offer.propTypes = {
-  doc: PropTypes.object,
-  model: PropTypes.object,
-  ready: PropTypes.bool.isRequired,
-};
-
-/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
-export default withTracker(({ match }) => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
-  const documentId = match.params._id;
-  // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('Stuff');
-  return {
-    doc: Stuffs.findOne(documentId),
-    ready: subscription.ready(),
-  };
-})(Offer);
+export default AddOffer;
