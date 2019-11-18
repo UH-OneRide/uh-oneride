@@ -65,6 +65,13 @@ class Signup extends React.Component {
                   type="password"
                   onChange={this.handleChange}
                 />
+                <Form.Input
+                    label="Name"
+                    name="name"
+                    placeholder="Full Name"
+                    type="name"
+                    onChange={this.handleChange}
+                />
                 <Form.Button content="Submit"/>
               </Segment>
             </Form>
