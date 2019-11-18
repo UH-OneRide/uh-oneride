@@ -24,10 +24,12 @@ class Offer extends React.Component {
         swal('Error', error.message, 'error') :
         swal('Success', 'Item updated successfully', 'success')));
   }
+
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
+
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
     return (
