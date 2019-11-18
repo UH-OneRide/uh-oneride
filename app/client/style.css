@@ -1,0 +1,21 @@
+.TopNavBar{
+  background-color:#1b7974 !important;
+  text-transform: uppercase !important;
+  padding:0px 0;
+  font-size:15px !important;
+  border-bottom:10px solid #f5dd62 !important;
+  font-color:#fff !important;
+  margin-bottom:50px;
+
+}
+
+.footerStyle{
+  background-color: #f5dd62 ;
+  text-color:#fff;
+  padding: 20px 0;
+  text-align:center;
+  margin-top:50px;
+}
+h1{
+  color:#1b7974;
+}
