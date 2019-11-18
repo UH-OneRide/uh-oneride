@@ -9,10 +9,18 @@ const Contacts = new Mongo.Collection('Contacts');
 const ContactSchema = new SimpleSchema({
   name: String,
   email: String,
-  category: String,
-  time: String,
+  category: {
+    type: String,
+    allowedValues: ['Rider/Driver Complaint', 'Found Bug', 'Other'],
+    defaultValue: 'Rider/Driver Complaint',
+  },
+  subject: String,
   description: String,
-  desiredResponse: String,
+  emailResponse: {
+    type: String,
+    allowedValues: ['Yes', 'No'],
+    defaultValue: 'Yes',
+  },
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
