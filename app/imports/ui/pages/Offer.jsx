@@ -29,7 +29,7 @@ class AddOffer extends React.Component {
   submit(data, formRef) {
     const { beginDate, endDate, destination, estimatedArrival, seats, price, car, description } = data;
     let owner = Meteor.user().username;
-    if (owner === '') {
+    if (owner === null) {
       owner = 'temp';
     }
     Offers.insert({ beginDate, endDate, destination, estimatedArrival, seats, price, car, description, owner },
