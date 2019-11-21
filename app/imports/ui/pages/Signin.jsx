@@ -42,7 +42,8 @@ export default class Signin extends React.Component {
     }
     // Otherwise return the Login form.
     return (
-      <Container>
+        <div className="content">
+          <Container className="content-container">
         <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
           <Grid.Column>
             <Header as="h2" textAlign="center">
@@ -86,6 +87,7 @@ export default class Signin extends React.Component {
           </Grid.Column>
         </Grid>
       </Container>
+        </div>
     );
   }
 }
