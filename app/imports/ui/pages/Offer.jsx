@@ -1,11 +1,18 @@
 import React from 'react';
 import { Container, Header, Form, Input, TextArea, Button, Segment, Radio, Icon } from 'semantic-ui-react';
+import AutoForm from 'uniforms-semantic/AutoForm';
+import TextField from 'uniforms-semantic/TextField';
+import NumField from 'uniforms-semantic/NumField';
+import SubmitField from 'uniforms-semantic/SubmitField';
+import ErrorsField from 'uniforms-semantic/ErrorsField';
+import swal from 'sweetalert';
+import { Meteor } from 'meteor/meteor';
+import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
+import SimpleSchema from 'simpl-schema';
+import { Offers } from '../../api/offer/Offer';
 
 /** A simple static component to render some text for the landing page. */
 class Offer extends React.Component {
-  state = {}
-
-  handleChange = (e, { value }) => this.setState({ value })
 
   render() {
     const { value } = this.state
