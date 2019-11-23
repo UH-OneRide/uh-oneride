@@ -20,7 +20,7 @@ class About extends React.Component {
             coordinate carpools for everyday classes, or one-time special event. Our service is exclusive to members
             of the UH system; students, faculty, staff from all campuses can participate!</p><br/><br/>
 
-          <Header as="h1" textAlign="center">How it works?</Header>
+          <Header as="h1" textAlign="center">How it work?</Header>
           <p>First you must sign up with a valid hawaii.edu email account. Provide a name, profile image, location in
             which you wish to be picked up from, and some personal information like hobbies, interests, major etc.
             By default everyone is a Rider, and can view a list of all drivers in the system. Each Driver would be

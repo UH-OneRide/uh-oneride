@@ -6,7 +6,7 @@ class Contact extends React.Component {
     return (
         <div className="content">
           <Container className="content-container">
-            <Header as="h1" textAlign="center">Contact</Header>
+            <Header as="h1" textAlign="center">Contact Us</Header>
             <Segment attached className="padding-30">
             <Form>
               <Form.Group widths='equal'>
@@ -33,8 +33,8 @@ class Contact extends React.Component {
                   style={{ height: 200 }}
                   id='form-textarea-control-opinion'
                   control={TextArea}
-                  label='Content'
-                  placeholder='Content'
+                  label='Message'
+                  placeholder='Message'
               />
               <Form.Button content='SUBMIT' />
             </Form>

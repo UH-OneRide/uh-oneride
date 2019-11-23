@@ -24,8 +24,6 @@ body{
 .footerStyle{
   background-color: #f5dd62 ;
   text-color:#fff;
-  padding: 20px 0;
-  text-align:center;
 }
 .home{
   background: url(/images/manoa-lowercampus.jpg) no-repeat center center fixed;
@@ -75,6 +73,28 @@ p{
   font-size:1.2em;
   line-height:1.6em !important;
 }
+.header-location{
+  font-size:30px;
+  font-weight:bold;
+  color:green !important;
+  padding-left:20px;
+}
+.card-left{
+  float:right;
+  text-align:center;
+}
+.card-style{
+  background-color:#fff !important;
+  padding:20px;
+  font-size:1.1em !important;
+}
+.search-box{
+  background-color: #f7e89d !important ;
+  width: 100%;
+  padding: 10px 0 10px 50px !important;
+  margin-bottom:20px;
+}
+
 
 
 

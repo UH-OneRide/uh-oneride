@@ -11,6 +11,8 @@ import Offer from '../pages/Offer';
 import Find from '../pages/Find';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
+import DriverProfile from '../pages/DriverProfile';
+import Profile from '../pages/Profile';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -31,6 +33,8 @@ class App extends React.Component {
               <Route path="/find" component={Find}/>
               <Route path="/about" component={About}/>
               <Route path="/contact" component={Contact}/>
+              <Route path="/driverprofile" component={DriverProfile}/>
+              <Route path="/profile" component={Profile}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
             </Switch>
