@@ -10,7 +10,7 @@ class Landing extends React.Component {
             <Grid.Row className="padding-30">
               <Grid.Column width={8}>
                 <Segment className="home-box" rounded>
-                  <img src="/images/UH_logo.png" style={{ width: 160 }}/>
+                  <Image src="/images/UH_logo.png" style={{ width: 160 }} centered/>
                   <Header as="h1">Commute Smart</Header>
                   <p>UH OneRide provides a solution to those looking for a transportation alternative, offering convenience,
                     safety, and a great opportunity to socialize with like people. Be a Rider, Driver, or both and easily
