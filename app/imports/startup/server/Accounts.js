@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
+import { _ } from 'meteor/underscore';
 
 /* eslint-disable no-console */
 
@@ -11,9 +12,9 @@ function createUser(email, password, role) {
     email: email,
     password: password,
   });
-  if (role === 'admin') {
-    Roles.addUsersToRoles(userID, 'admin');
-  }
+  _.each(role, function (element) {
+    Roles.addUsersToRoles(userID, element);
+  });
 }
 
 /** When running app for first time, pass a settings file to set up a default user account. */

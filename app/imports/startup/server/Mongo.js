@@ -1,18 +1,32 @@
 import { Meteor } from 'meteor/meteor';
-import { Stuffs } from '../../api/stuff/Stuff.js';
+import { Contacts } from '../../api/contact/Contact';
+import { Offers } from '../../api/offer/Offer';
 
 /* eslint-disable no-console */
 
 /** Initialize the database with a default data document. */
-function addData(data) {
+function addContact(data) {
   console.log(`  Adding: ${data.name} (${data.owner})`);
-  Stuffs.insert(data);
+  Contacts.insert(data);
 }
 
 /** Initialize the collection if empty. */
-if (Stuffs.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addData(data));
+if (Contacts.find().count() === 0) {
+  if (Meteor.settings.defaultContact) {
+    console.log('Creating default contacts.');
+    Meteor.settings.defaultContact.map(data => addContact(data));
+  }
+}
+
+function addOffer(data) {
+  console.log(`  Adding: ${data.name} (${data.owner})`);
+  Offers.insert(data);
+}
+
+/** Initialize the collection if empty. */
+if (Offers.find().count() === 0) {
+  if (Meteor.settings.defaultOffer) {
+    console.log('Creating default contacts.');
+    Meteor.settings.defaultOffer.map(data => addOffer(data));
   }
 }
