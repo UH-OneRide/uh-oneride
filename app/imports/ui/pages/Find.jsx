@@ -1,14 +1,10 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Container, Button, Card, Image, Icon, Form, Segment } from 'semantic-ui-react';
-=======
-import { Header, Card, Container } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Offer } from '../components/Offer';
 import { Offers } from '../../api/offer/Offer';
->>>>>>> master
 
 /** A simple static component to render some text for the landing page. */
 class Find extends React.Component {
@@ -97,12 +93,13 @@ class Find extends React.Component {
             </Card.Group>
           </Container>
         </div>
-        <Container>
+/*        <Container>
           <Header as="h1" textAlign="center">Find a Ride</Header>
           <Card.Group>
             {this.props.offers.map((offer, index) => <Offer key={index} offer={offer}/>)}
           </Card.Group>
         </Container>
+ */
     );
   }
 }

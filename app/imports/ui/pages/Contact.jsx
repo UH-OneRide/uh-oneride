@@ -16,40 +16,41 @@ class Contact extends React.Component {
           <Container className="content-container">
             <Header as="h1" textAlign="center">Contact Us</Header>
             <Segment attached className="padding-30">
-            <Form>
-              <Form.Group widths='equal'>
+              <Form>
+                <Form.Group widths='equal'>
+                  <Form.Field
+                      id='form-input-control-name'
+                      control={Input}
+                      label='Name'
+                      placeholder='Name'
+                  />
+                  <Form.Field
+                      id='form-input-control-email'
+                      control={Input}
+                      label='Email'
+                      placeholder='emailaddress@hawaii.edu'
+                  />
+                </Form.Group>
                 <Form.Field
-                    id='form-input-control-name'
+                    id='form-input-control-subject'
                     control={Input}
-                    label='Name'
-                    placeholder='Name'
+                    label='Subject'
+                    placeholder='Subject'
                 />
                 <Form.Field
-                    id='form-input-control-email'
-                    control={Input}
-                    label='Email'
-                    placeholder='emailaddress@hawaii.edu'
+                    style={{ height: 200 }}
+                    id='form-textarea-control-opinion'
+                    control={TextArea}
+                    label='Message'
+                    placeholder='Message'
                 />
-              </Form.Group>
-              <Form.Field
-                  id='form-input-control-subject'
-                  control={Input}
-                  label='Subject'
-                  placeholder='Subject'
-              />
-              <Form.Field
-                  style={{ height: 200 }}
-                  id='form-textarea-control-opinion'
-                  control={TextArea}
-                  label='Message'
-                  placeholder='Message'
-              />
-              <Form.Button content='SUBMIT' />
-            </Form>
+                <Form.Button content='SUBMIT'/>
+              </Form>
             </Segment>
           </Container>
         </div>
     );
+  }
 
   /** On submit, insert the data. */
   submit(data, formRef) {
