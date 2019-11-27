@@ -17,12 +17,18 @@ class NavBar extends React.Component {
                 <Menu.Item as={NavLink} activeClassName="" exact to="/">
                   <Image size='small' src="/images/UHOneRide_logo.png"/>
                 </Menu.Item>
-                  <Menu.Item as={NavLink} activeClassName="active" exact to="/offer" key='offer'>
-                    Offer a Ride
-                  </Menu.Item>
-                  <Menu.Item as={NavLink} activeClassName="active" exact to="/find" key='find'>
-                    Find a Ride
-                  </Menu.Item>
+                  {this.props.currentUser ? (
+                      [<Menu.Item as={NavLink} activeClassName="active" exact to="/offer" key='offer'>
+                        Offer a Ride</Menu.Item>,
+                      <Menu.Item as={NavLink} activeClassName="active" exact to="/find" key='find'>
+                        Find a Ride</Menu.Item>,
+                      ]
+                  ) : ''}
+                  {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
+                      <Menu.Item>
+                        Admin Placeholder
+                      </Menu.Item>
+                  ) : ''}
                   <Menu.Item as={NavLink} activeClassName="active" exact to="/about" key='about'>
                     About Us
                   </Menu.Item>
@@ -32,14 +38,21 @@ class NavBar extends React.Component {
                 </Menu>
               </Grid.Column>
                 <Grid.Column floated='right' width={2}>
-                <Menu secondary inverted>
-                  <Menu.Item as={NavLink} activeClassName="active" exact to="/signin" key='signin'>
-                    Log in
-                  </Menu.Item>
-                  <Menu.Item as={NavLink} activeClassName="active" exact to="/signup" key='signup'>
-                    Sign up
-                  </Menu.Item>
-                </Menu>
+                  {this.props.currentUser === '' ? (
+                      <Menu secondary inverted>
+                        <Menu.Item as={NavLink} activeClassName="active" exact to="/signin" key='signin'>
+                          Log in
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} activeClassName="active" exact to="/signup" key='signup'>
+                          Sign up
+                        </Menu.Item>
+                      </Menu>
+                  ) : (
+                      <Menu secondary inverted>
+                        <Menu.Item as={NavLink} activeClassName="active" exact to="/signout" key='signout'>
+                          Sign Out</Menu.Item>
+                      </Menu>
+                  )}
               </Grid.Column>
             </Grid>
           </Container>
