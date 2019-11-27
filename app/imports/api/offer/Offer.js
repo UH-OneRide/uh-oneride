@@ -7,15 +7,15 @@ const Offers = new Mongo.Collection('Offers');
 
 /** Define a schema to specify the structure of each document in the collection. */
 const OfferSchema = new SimpleSchema({
-  beginDate: String,
-  endDate: String,
+  start: String,
   destination: String,
-  estimatedArrival: String,
-  seats: Number,
+  startDate: Date,
+  endDate: Date,
+  days: { type: Object, blackbox: true },
+//  arrivalTime: String,
+  passengers: Number,
   price: Number,
-  car: String,
-  description: String,
-  owner: String,
+  ownerID: String,
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */

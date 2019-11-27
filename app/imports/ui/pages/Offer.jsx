@@ -1,18 +1,104 @@
 import React from 'react';
-import { Container, Header, Form, Input, TextArea, Button, Segment, Radio, Icon } from 'semantic-ui-react';
-import AutoForm from 'uniforms-semantic/AutoForm';
-import TextField from 'uniforms-semantic/TextField';
-import NumField from 'uniforms-semantic/NumField';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import ErrorsField from 'uniforms-semantic/ErrorsField';
-import swal from 'sweetalert';
+import { Container, Header, Form, Input, Button, Segment, Icon,  } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
-import SimpleSchema from 'simpl-schema';
+import { _ } from 'meteor/underscore';
+import swal from 'sweetalert';
 import { Offers } from '../../api/offer/Offer';
+
+function array_to_object(array){
+  return _.map(array, function (key_) { return { key: key_, text: key_, value: key_ }; });
+}
+
+const locations = [
+  'Diamond Head',
+  'Hawaii Kai',
+  'Honolulu',
+  'Kahala',
+  'Kailua',
+  'Kapolei',
+  'Ko Olina',
+  'Lanikai',
+  'Makakilo',
+  'Mililani',
+  'North Shore Oahu',
+  'Pearl City',
+  'Waikiki',
+]
+const startLocations = array_to_object(locations);
+
+const campuses = [
+    'UH Manoa',
+    'UH Maui',
+    'UH West Oahu',
+    'UH Hilo',
+    'Hawaii CC',
+    'Honolulu CC',
+    'Kapiolani CC',
+    'Kauai CC',
+    'Leeward CC',
+    'Windward CC',
+]
+const destinations = array_to_object(campuses);
 
 /** A simple static component to render some text for the landing page. */
 class Offer extends React.Component {
+  state = {
+    start: '',
+    destination: '',
+    startDate: '',
+    endDate: '',
+    days: {
+      M: false,
+      T: false,
+      W: false,
+      Th: false,
+      F: false,
+      Sa: false,
+      Su: false,
+    },
+    //arrivalTime: '',
+    passengers: '',
+    price: '',
+  };
+
+  submit = () => {
+//    const { start, destination, startDate, endDate, days, arrivalTime, passengers, price } = this.state;
+    const { start, destination, startDate, endDate, passengers, price } = this.state;
+    console.log(this.state);
+    const { days } = this.state;
+    console.log(days);
+
+    const ownerID = Meteor.user()._id;
+//    Offers.insert({ start, destination, startDate, endDate, days, arrivalTime, passengers, price, ownerID },
+    Offers.insert({ start, destination, startDate, endDate, days, passengers, price, ownerID },
+      (error) => {
+          if (error) {
+            swal('Error', error.message, 'error');
+          } else {
+            swal('Success', 'Item added successfully', 'success');
+          }
+        });
+  }
+
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+
+  handleDayToggle = (e, { name }) => {
+    const { days } = this.state;
+    days[name] = !days.name;
+    this.setState({ days: days });
+  };
+
+  handleDate = (e, { name, value }) => {
+    const x = value.split('/');
+    if (x.length === 3) {
+      const [month, day, year] = x;
+      this.setState({ [name]: new Date(`${year}-${month}-${day}`) });
+    } else {
+      this.setState({ [name]: '' });
+    }
+  }
+
 
   render() {
     return (
@@ -26,188 +112,75 @@ class Offer extends React.Component {
             <Segment attached className="padding-30">
             <Form>
               <Form.Group widths='equal'>
-                <Form.Field label='Origin' control='select'>
-                  <option value='Diamond Head'>Diamond Head</option>
-                  <option value='Hawaii Kai'>Hawaii Kai</option>
-                  <option value='Honolulu'>Honolulu</option>
-                  <option value='Kahala'>Kahala</option>
-                  <option value='Kailua'>Kailua</option>
-                  <option value='Kapolei'>Kapolei</option>
-                  <option value='Ko Olina'>Ko Olina</option>
-                  <option value='Lanikai'>Lanikai</option>
-                  <option value='Makakilo'>Makakilo</option>
-                  <option value='Mililani'>Mililani</option>
-                  <option value='North Shore Oahu'>North Shore Oahu</option>
-                  <option value='Pearl City'>Pearl City</option>
-                  <option value='Waikiki'>Waikiki</option>
-                </Form.Field>
-                <Form.Field label='Destination' control='select'>
-                  <option value='UH Manoa'>UH Manoa</option>
-                  <option value='UH Maui'>UH Maui</option>
-                  <option value='UH West Oahu'> UH West Oahu</option>
-                  <option value='UH Hilo'>UH Hilo</option>
-                  <option value='Hawaii CC'>Hawaii CC</option>
-                  <option value='Honolulu CC'>Honolulu CC</option>
-                  <option value='Kapiolani CC'>Kapiolani CC</option>
-                  <option value='Kauai CC'>Kauai CC</option>
-                  <option value='Leeward CC'>Leeward CC</option>
-                  <option value='Windward CC'>Windward CC</option>
-                </Form.Field>
+                <Form.Dropdown
+                    onChange={this.handleChange}
+                    label='Origin'
+                    selection
+                    options={startLocations}
+                    placeholder={'Choose a Starting Location'}
+                    name={'start'}/>
+                <Form.Dropdown
+                    onChange={this.handleChange}
+                    label='Destination'
+                    selection
+                    options={destinations}
+                    placeholder={'Choose a Destination'}
+                    name={'destination'}/>
               </Form.Group>
 
               <Form.Group widths='equal'>
-                <Form.Field
-                    id='form-input-control-start-date'
-                    control={Input}
+                <Form.Input
                     label='Start Date'
-                    placeholder='Month/Day/Year'
+                    placeholder='MM/DD/YYYY'
+                    name={'startDate'}
+                    onChange={this.handleDate}
                 />
-                <Form.Field
-                    id='form-input-control-end-date'
-                    control={Input}
+                <Form.Input
                     label='End Date'
-                    placeholder='Month/Day/Year'
+                    placeholder='MM/DD/YYYY'
+                    name={'endDate'}
+                    onChange={this.handleDate}
                 />
               </Form.Group>
               <Form.Group inline>
                 <label>Select Days: </label>
-                <Form.Field label='Monday' control='input' type='checkbox' />
-                <Form.Field label='Tuesday' control='input' type='checkbox' />
-                <Form.Field label='Wednesday' control='input' type='checkbox' />
-                <Form.Field label='Thursday' control='input' type='checkbox' />
-                <Form.Field label='Friday' control='input' type='checkbox' />
-                <Form.Field label='Saturday' control='input' type='checkbox' />
-                <Form.Field label='Sunday' control='input' type='checkbox' />
+                <Form.Checkbox label='Monday' name={'M'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Tuesday' name={'T'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Wednesday'name={'W'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Thursday' name={'Th'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Friday' name={'F'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Saturday' name={'Sa'} onChange={this.handleDayToggle}/>
+                <Form.Checkbox label='Sunday' name={'Su'} onChange={this.handleDayToggle}/>
               </Form.Group>
               <Form.Group widths='equal'>
-                <Form.Field
-                    id='form-input-control-start-school'
-                    control={Input}
+                <Form.Input
                     label='Start School'
                     placeholder='Hour/Minutes/AM'
+                    name={'arrivalTime'}
+                    onChange={this.handleChange}
                 />
                 <Form.Field
                     id='form-input-control-leave-school'
                     control={Input}
                     label='Leave School'
                     placeholder='Hour/Minutes/PM'
+                    onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group widths='equal'>
-                <Form.Field label='Number of Passengers' control='select'>
-                  <option value='UH Manoa'>0</option>
-                  <option value='UH Manoa'>1</option>
-                  <option value='UH Maui'>2</option>
-                  <option value='UH West Oahu'>3</option>
-                  <option value='UH Hilo'>4</option>
-                </Form.Field>
-                <Form.Field
-                    id='form-input-control-price'
-                    control={Input}
+                <Form.Input label='Number of Passengers' name={'passengers'} onChange={this.handleChange}/>
+                <Form.Input
                     label='Price per ride'
                     placeholder='Price per ride'
+                    name={'price'}
+                    onChange={this.handleChange}
                 />
               </Form.Group>
             </Form>
             </Segment>
-            <Header as='h3'>
-              <Icon name='car' />
-              <Header.Content>CAR INFO</Header.Content>
-            </Header>
-            <Segment attached className="padding-30">
-              <Form>
-                  <Form.Field
-                      id='form-input-control-car-image'
-                      control={Input}
-                      label='Car image'
-                      placeholder='Upload your car image'
-                  />
 
-                <Form.Group widths='equal'>
-                  <Form.Field
-                      id='form-input-control-car-make'
-                      control={Input}
-                      label='Make'
-                      placeholder='Make'
-                  />
-                  <Form.Field
-                      id='form-input-control-car-type'
-                      control={Input}
-                      label='Type'
-                      placeholder='Type'
-                  />
-                </Form.Group>
-                <Form.Group widths='equal'>
-                  <Form.Field
-                      id='form-input-control-car-year'
-                      control={Input}
-                      label='Year'
-                      placeholder='Year'
-                  />
-                  <Form.Field
-                      id='form-input-control-car-seats'
-                      control={Input}
-                      label='Number of Seats'
-                      placeholder='Number of Seats'
-                  />
-                </Form.Group>
-              </Form>
-            </Segment>
-            <Header as='h3'>
-              <Icon name='drivers license' />
-              <Header.Content>DRIVER INFO</Header.Content>
-            </Header>
-            <Segment attached className="padding-30">
-              <Form>
-                <Form.Field
-                    id='form-input-control-driver-image'
-                    control={Input}
-                    label='Profile Image'
-                    placeholder='Upload your profile image'
-                />
-                <Form.Group widths='equal'>
-                  <Form.Field
-                      id='form-input-control-first-name'
-                      control={Input}
-                      label='First name'
-                      placeholder='First name'
-                  />
-                  <Form.Field
-                      id='form-input-control-last-name'
-                      control={Input}
-                      label='Last name'
-                      placeholder='Last name'
-                  />
-                </Form.Group>
-
-                <Form.Group widths='equal'>
-                  <Form.Field
-                      id='form-input-control-major'
-                      control={Input}
-                      label='Major/Area of Study/Job'
-                      placeholder='Major'
-                  />
-                  <Form.Field label='Year in School' control='select'>
-                    <option value="freshman">Freshman</option>
-                    <option value='sophomore'>Sophomore</option>
-                    <option value="junior">Junior</option>
-                    <option value='senior'>Senior</option>
-                    <option value='senior'>NA</option>
-                  </Form.Field>
-                </Form.Group>
-
-                <Form.Field
-                    style={{ height: 200 }}
-                    id='form-textarea-control-opinion'
-                    control={TextArea}
-                    label='Comment'
-                    placeholder='Comment'
-                />
-
-              </Form>
-            </Segment><br/><br/>
             <Form>
-              <Form.Field control={Button}>SUBMIT</Form.Field>
+              <Form.Field control={Button} onClick={this.submit}>SUBMIT</Form.Field>
             </Form>
           </Container>
         </div>

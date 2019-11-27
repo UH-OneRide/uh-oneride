@@ -13,7 +13,7 @@ class Find extends React.Component {
         <div className="content">
           <Container className="content-container">
             <Segment className="search-box">
-              <Form centered>
+              <Form>
               <Form.Group >
                 <Form.Field label='Select Your Origin' control='select' width="6">
                   <option value='Diamond Head'>Diamond Head</option>
@@ -52,44 +52,7 @@ class Find extends React.Component {
             </Form>
             </Segment>
             <Card.Group itemsPerRow={2}>
-              <Card className="card-style">
-                <Card.Content>
-                  <div className="card-left">
-                  <Image
-                      size='small'
-                      src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
-                      /><br/>
-                    <Card.Header size="medium">Daniel Kim</Card.Header>
-                    <Card.Meta>Computer Science, Junior</Card.Meta>
-                  </div>
-                  <Card.Header>Hawaii Kai <Icon name='arrow right' /> UN Manoa</Card.Header><br/>
-                  <Card.Meta>DATE: 11/22/2019 - 5/1/2020</Card.Meta>
-                  <Card.Meta>DAYS: Monday, Wednesday, Friday</Card.Meta>
-                  <Card.Meta>TIME: 8:00AM - 4:00PM</Card.Meta>
-                  <Card.Meta>Cost: $2 per ride</Card.Meta><br/>
-                  <Button positive>More Details</Button>
-                </Card.Content>
-
-              </Card>
-              <Card className="card-style">
-                <Card.Content>
-                  <div className="card-left">
-                    <Image
-                        size='small'
-                        src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
-                    /><br/>
-                    <Card.Header size="medium">Daniel Kim</Card.Header>
-                    <Card.Meta>Computer Science, Junior</Card.Meta>
-                  </div>
-                  <Card.Header>Hawaii Kai <Icon name='arrow right' /> UN Manoa</Card.Header><br/>
-                  <Card.Meta>DATE: 11/22/2019 - 5/1/2020</Card.Meta>
-                  <Card.Meta>DAYS: Monday, Wednesday, Friday</Card.Meta>
-                  <Card.Meta>TIME: 8:00AM - 4:00PM</Card.Meta>
-                  <Card.Meta>Cost: $2 per ride</Card.Meta><br/>
-                  <Button positive>More Details</Button>
-                </Card.Content>
-              </Card>
-
+              {this.props.offers.map((offer, index) => <Offer key={index} offer={offer} />)}
             </Card.Group>
           </Container>
         </div>
