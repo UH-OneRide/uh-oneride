@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Card, Icon, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+/** Renders a single offer in the Find page. */
 export class Offer extends React.Component {
 
   getFormattedDate(offer) {
@@ -13,40 +13,41 @@ export class Offer extends React.Component {
 
   getRideDays(object) {
     let days = '';
-    _.each(_.keys(_.object(_.filter(_.pairs(object), function(obj) { return obj[1]; }))),
-        function(day){
-      let x = '';
-      switch (day){
-        case 'M':
-          x = 'Mon';
-          break;
-        case 'T':
-          x = 'Tue';
-          break;
-        case 'W':
-          x = 'Wed';
-          break;
-        case 'Th':
-          x = 'Thu';
-          break;
-        case 'F':
-          x = 'Fri';
-          break;
-        case 'Sa':
-          x = 'Sat';
-          break;
-        case 'Su':
-          x = 'Sun';
-          break;
-        default:
-          x = day;
-      }
-      days += `${x}, `;
-    })
+    _.each(_.keys(_.object(_.filter(_.pairs(object), function (obj) {
+          return obj[1];
+        }))),
+        function (day) {
+          let x = '';
+          switch (day) {
+            case 'M':
+              x = 'Mon';
+              break;
+            case 'T':
+              x = 'Tue';
+              break;
+            case 'W':
+              x = 'Wed';
+              break;
+            case 'Th':
+              x = 'Thu';
+              break;
+            case 'F':
+              x = 'Fri';
+              break;
+            case 'Sa':
+              x = 'Sat';
+              break;
+            case 'Su':
+              x = 'Sun';
+              break;
+            default:
+              x = day;
+          }
+          days += `${x}, `;
+        })
     days = days.substring(0, days.length - 2);
-    console.log(days)
     return days;
-}
+  }
 
 render() {
  return (
@@ -66,7 +67,7 @@ render() {
          <Card.Meta>DAYS: { this.getRideDays(this.props.offer.days) }</Card.Meta>
          <Card.Meta>TIME: 8:00AM - 4:00PM</Card.Meta>
          <Card.Meta>Cost: ${ this.props.offer.price } per ride</Card.Meta><br/>
-         <Button positive>More Details</Button>
+         <Button positive as={NavLink} exact to="/driverprofile" key='profile'>More Details</Button>
        </Card.Content>
      </Card>
  );
