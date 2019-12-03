@@ -1,15 +1,37 @@
 import React from 'react';
 import { Container, Form, Input, TextArea, Header, Segment } from 'semantic-ui-react';
 import { Contacts, ContactSchema } from '/imports/api/contact/Contact';
-import AutoForm from 'uniforms-semantic/AutoForm';
-import TextField from 'uniforms-semantic/TextField';
-import SelectField from 'uniforms-semantic/SelectField';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import ErrorsField from 'uniforms-semantic/ErrorsField';
 import swal from 'sweetalert';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
+import { Meteor } from 'meteor/meteor';
+
+import { array_to_object } from './Offer';
+
+const contactCategories = [
+    'Rider/Driver Complaint',
+    'Found Bug',
+    'Other',
+]
+const categories = array_to_object(contactCategories);
+
+const contactResponses = [
+    'Email Response',
+    'No Response Required',
+]
+const responses = array_to_object(contactResponses);
 
 class Contact extends React.Component {
+  state = {
+    name: (Meteor.user() ? (Meteor.user().username) : ''),
+    email: (Meteor.user() ? (Meteor.user().emails[0].address) : ''),
+    category: '',
+    subject: '',
+    description: '',
+    response: '',
+  };
+
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+
   render() {
     return (
         <div className="content">
@@ -18,33 +40,55 @@ class Contact extends React.Component {
             <Segment attached className="padding-30">
               <Form>
                 <Form.Group widths='equal'>
-                  <Form.Field
+                  <Form.Input
+                      onChange={this.handleChange}
                       id='form-input-control-name'
-                      control={Input}
                       label='Name'
-                      placeholder='Name'
+                      name={ 'name' }
+                      placeholder={'Name'}
+                      defaultValue={this.state.name}
                   />
-                  <Form.Field
+                  <Form.Input
+                      onChange={this.handleChange}
                       id='form-input-control-email'
-                      control={Input}
                       label='Email'
-                      placeholder='emailaddress@hawaii.edu'
+                      name={ 'email' }
+                      placeholder={'Email'}
+                      defaultValue={this.state.email}
                   />
                 </Form.Group>
-                <Form.Field
+                <Form.Dropdown
+                    onChange={this.handleChange}
+                    label='Category'
+                    name={ 'category' }
+                    options={categories}
+                    selection
+                    placeholder={'What\'s the issue?'}
+                />
+                <Form.Input
+                    onChange={this.handleChange}
                     id='form-input-control-subject'
-                    control={Input}
                     label='Subject'
                     placeholder='Subject'
+                    name={ 'subject' }
                 />
-                <Form.Field
+                <Form.Input
                     style={{ height: 200 }}
                     id='form-textarea-control-opinion'
+                    label='Description'
                     control={TextArea}
-                    label='Message'
-                    placeholder='Message'
+                    placeholder='Please describe the issue'
+                    name={ 'description' }
                 />
-                <Form.Button content='SUBMIT'/>
+                <Form.Dropdown
+                    onChange={this.handleChange}
+                    label='Response'
+                    name={ 'response' }
+                    options={responses}
+                    selection
+                    placeholder={'Would you like a response?'}
+                  />
+                <Form.Button onClick={this.submit} content='SUBMIT'/>
               </Form>
             </Segment>
           </Container>
@@ -54,9 +98,10 @@ class Contact extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { name, email, category, subject, time, description, emailResponse } = data;
-//    const owner = Meteor.user().username;
-    Contacts.insert({ name, email, subject, category, time, description, emailResponse },
+    console.log(this.state);
+    const { name, email, category, subject, description, emailResponse } = this.state;
+    const owner = Meteor.user()._Id;
+    Contacts.insert({ name, email, subject, category,  description, emailResponse, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');

@@ -49,8 +49,12 @@ class NavBar extends React.Component {
                       </Menu>
                   ) : (
                       <Menu secondary inverted>
+                        <Menu.Item as={NavLink} activeClassName="active" exact to="/profile/:_id" key='profile'>
+                          Hello  {Meteor.user().username}!
+                        </Menu.Item>
                         <Menu.Item as={NavLink} activeClassName="active" exact to="/signout" key='signout'>
-                          Sign Out</Menu.Item>
+                          Sign Out
+                        </Menu.Item>
                       </Menu>
                   )}
               </Grid.Column>

@@ -34,7 +34,7 @@ class App extends React.Component {
               <Route path="/about" component={About}/>
               <Route path="/contact" component={Contact}/>
               <Route path="/driverprofile" component={DriverProfile}/>
-              <Route path="/profile" component={Profile}/>
+              <Route path="/profile/:_id" component={Profile}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
             </Switch>
