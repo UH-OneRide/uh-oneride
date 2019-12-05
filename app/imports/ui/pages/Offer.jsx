@@ -10,7 +10,7 @@ export function array_to_object(array){
   return _.map(array, function (key_) { return { key: key_, text: key_, value: key_ }; });
 }
 
-const locations = [
+export const locations = [
   'Diamond Head',
   'Hawaii Kai',
   'Honolulu',
@@ -27,7 +27,7 @@ const locations = [
 ]
 const startLocations = array_to_object(locations);
 
-const campuses = [
+export const campuses = [
     'UH Manoa',
     'UH Maui',
     'UH West Oahu',
