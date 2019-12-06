@@ -11,8 +11,7 @@ class NavBar extends React.Component {
     return (
         <div className="TopNavBar" >
           <Container>
-            <Grid>
-              <Grid.Column floated='left' width={8}>
+
                 <Menu className="menuMain" inverted borderless >
                 <Menu.Item as={NavLink} activeClassName="" exact to="/">
                   <Image size='small' src="/images/UHOneRide_logo.png"/>
@@ -35,30 +34,28 @@ class NavBar extends React.Component {
                   <Menu.Item as={NavLink} activeClassName="active" exact to="/contact" key='contact'>
                     Contact Us
                   </Menu.Item>
-                </Menu>
-              </Grid.Column>
-                <Grid.Column floated='right' width={2}>
+
+
                   {this.props.currentUser === '' ? (
-                      <Menu secondary inverted>
+                      <Menu.Menu position='right'>
                         <Menu.Item as={NavLink} activeClassName="active" exact to="/signin" key='signin'>
                           Log in
                         </Menu.Item>
                         <Menu.Item as={NavLink} activeClassName="active" exact to="/signup" key='signup'>
                           Sign up
                         </Menu.Item>
-                      </Menu>
+                      </Menu.Menu>
                   ) : (
-                      <Menu secondary inverted>
+                      <Menu.Menu position='right'>
                         <Menu.Item as={NavLink} activeClassName="active" exact to="/profile/:_id" key='profile'>
                           Hello  {Meteor.user().username}!
                         </Menu.Item>
                         <Menu.Item as={NavLink} activeClassName="active" exact to="/signout" key='signout'>
                           Sign Out
                         </Menu.Item>
-                      </Menu>
+                      </Menu.Menu>
                   )}
-              </Grid.Column>
-            </Grid>
+                </Menu>
           </Container>
         </div>
 

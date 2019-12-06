@@ -16,8 +16,7 @@ class Landing extends React.Component {
                     safety, and a great opportunity to socialize with like people. Be a Rider, Driver, or both and easily
                     coordinate carpools for everyday classes, or one-time special event. Our service is exclusive to members
                     of the UH system; students, faculty, staff from all campuses can participate!</p>
-                  <Button inverted><Icon name='car' /> I am a driver</Button><br/>
-                  <Button inverted className="yellow-button"><Icon name='user' /> I am a passenger</Button>
+                  <Button inverted className="yellow-button"><Icon name='user' /> SIGN UP</Button>
                 </Segment>
               </Grid.Column>
               <Grid.Column floated='right' width={8}>
