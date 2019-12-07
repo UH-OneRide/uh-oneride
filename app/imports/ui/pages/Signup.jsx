@@ -101,12 +101,23 @@ class Signup extends React.Component {
                     onChange={this.handleChange}
                 />
                 </Form.Group>
+                <Form.Group>
+                  <Form.Input
+                      style={{ width: 525 }}
+                      label='Profile Image'
+                      name='profile'
+                      placeholder="Upload your profile image"
+                      type="profileImage"
+                      onChange={this.handleChange}
+                  />
+                  <span><Form.Button style={{ margin: 20 }} content='Choose an Image' /></span>
+                </Form.Group>
                 <br/>
 
                 <p> <Icon name='car' /> If you are a driver, please add your car info.</p>
                 <Form.Group>
                   <Form.Input
-                      style={{ width: 520 }}
+                      style={{ width: 525 }}
                       label='Car Image'
                       name='carImage'
                       placeholder="Upload your car image"

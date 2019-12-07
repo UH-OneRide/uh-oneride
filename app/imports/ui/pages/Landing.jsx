@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Image, Segment, Button, Header, Icon } from 'semantic-ui-react';
+import { Grid, Image, Segment, Button, Header, Icon, Menu } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
@@ -16,7 +17,8 @@ class Landing extends React.Component {
                     safety, and a great opportunity to socialize with like people. Be a Rider, Driver, or both and easily
                     coordinate carpools for everyday classes, or one-time special event. Our service is exclusive to members
                     of the UH system; students, faculty, staff from all campuses can participate!</p>
-                  <Button inverted className="yellow-button"><Icon name='user' /> SIGN UP</Button>
+                  <Button fluid positive as={NavLink} activeClassName="active" exact to="/signup" key='signup'>
+                    <Icon name='user' /> SIGN UP TODAY!</Button>
                 </Segment>
               </Grid.Column>
               <Grid.Column floated='right' width={8}>
