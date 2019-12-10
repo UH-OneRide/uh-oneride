@@ -6,7 +6,7 @@ class DriverProfile extends React.Component {
     return (
         <div className="content">
           <Container className="content-container">
-              <Grid verticalAlign='middle' textAlign='center' container>
+              <Grid verticalAlign='top' textAlign='center' container>
                 <Grid.Row>
                   <Grid.Column width={5} verticalAlign='top'>
                     <Card verticalAlign='top'>

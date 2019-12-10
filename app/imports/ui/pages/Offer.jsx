@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Form, Input, Button, Segment, Icon,  } from 'semantic-ui-react';
+import { Container, Header, Form, Input, Button, Segment, Icon, TextArea, Radio } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
 import { _ } from 'meteor/underscore';
@@ -99,8 +99,8 @@ class Offer extends React.Component {
     }
   }
 
-
   render() {
+
     return (
         <div className="content">
           <Container className="content-container">
@@ -111,6 +111,33 @@ class Offer extends React.Component {
             </Header>
             <Segment attached className="padding-30">
             <Form>
+              <Form.Group>
+
+                <Form.Field>
+                  <Radio
+                      label='Round Trip'
+                      name='radioGroup'
+                      value='Round Trip'
+                      onChange={this.handleChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                      label='One Way (From School)'
+                      name='radioGroup'
+                      value='One Way (From School)'
+                      onChange={this.handleChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                      label='One Way (To School)'
+                      name='radioGroup'
+                      value='One Way (To School)'
+                      onChange={this.handleChange}
+                  />
+                </Form.Field>
+              </Form.Group>
               <Form.Group widths='equal'>
                 <Form.Dropdown
                     onChange={this.handleChange}
@@ -141,7 +168,7 @@ class Offer extends React.Component {
                     name={'endDate'}
                     onChange={this.handleDate}
                 />
-              </Form.Group>
+              </Form.Group><br/>
               <Form.Group inline>
                 <label>Select Days: </label>
                 <Form.Checkbox label='Monday' name={'M'} onChange={this.handleDayToggle}/>
@@ -151,18 +178,18 @@ class Offer extends React.Component {
                 <Form.Checkbox label='Friday' name={'F'} onChange={this.handleDayToggle}/>
                 <Form.Checkbox label='Saturday' name={'Sa'} onChange={this.handleDayToggle}/>
                 <Form.Checkbox label='Sunday' name={'Su'} onChange={this.handleDayToggle}/>
-              </Form.Group>
+              </Form.Group><br/>
               <Form.Group widths='equal'>
                 <Form.Input
-                    label='Start School'
-                    placeholder='Hour/Minutes/AM'
-                    name={'arrivalTime'}
-                    onChange={this.handleChange}
-                />
+                  label='Start School (estimated arrival time to school)'
+                  placeholder='Hour/Minutes/AM'
+                  name={'arrivalTime'}
+                  onChange={this.handleChange}
+              />
                 <Form.Field
                     id='form-input-control-leave-school'
                     control={Input}
-                    label='Leave School'
+                    label='Leave School (estimated departure time from school)'
                     placeholder='Hour/Minutes/PM'
                     onChange={this.handleChange}
                 />
@@ -170,18 +197,27 @@ class Offer extends React.Component {
               <Form.Group widths='equal'>
                 <Form.Input label='Number of Passengers' name={'passengers'} onChange={this.handleChange}/>
                 <Form.Input
-                    label='Price per ride'
+                    label='Price per ride ($)'
                     placeholder='Price per ride'
                     name={'price'}
                     onChange={this.handleChange}
                 />
               </Form.Group>
-            </Form>
+                <Form.Input
+                    style={{ height: 200 }}
+                    id='form-textarea-control-opinion'
+                    label='Description'
+                    control={TextArea}
+                    placeholder=''
+                    name={ 'comment' }
+                />
+            </Form><br/>
+              <Form>
+                <Form.Field fluid positive pos control={Button} onClick={this.submit}>SUBMIT</Form.Field>
+              </Form>
             </Segment>
 
-            <Form>
-              <Form.Field control={Button} onClick={this.submit}>SUBMIT</Form.Field>
-            </Form>
+
           </Container>
         </div>
     );

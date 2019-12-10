@@ -69,7 +69,7 @@ export default class Signin extends React.Component {
                   type="password"
                   onChange={this.handleChange}
                 />
-                <Form.Button content="Submit"/>
+                <Form.Button positive fluid content="SUBMIT"/>
               </Segment>
             </Form>
             <Message>
