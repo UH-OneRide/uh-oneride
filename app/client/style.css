@@ -82,20 +82,21 @@ p{
 .card-left{
   float:right;
   text-align:center;
+  font-color:#000;
 }
 .card-style{
-  background-color:#fff !important;
-  padding:20px;
-  font-size:1.1em !important;
+  background:#fff !important;
+  font-color:#000;
 }
 .search-box{
-  background-color: #f7e89d !important ;
+  background-color: #fff !important ;
   width: 100%;
   padding: 10px 0 10px 50px !important;
   margin-bottom:20px;
 }
-.green-button{
-
+.card{
+  background:#fff !important;
+  padding-bottom:5px !important;
 }
 
 

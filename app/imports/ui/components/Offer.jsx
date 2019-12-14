@@ -51,8 +51,8 @@ export class Offer extends React.Component {
 
 render() {
  return (
-     <Card className="card-style">
-       <Card.Content>
+     <Card >
+       <Card.Content className="card-style">
          <div className="card-left">
            <Image
                size='small'

@@ -12,6 +12,7 @@ import Find from '../pages/Find';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
 import DriverProfile from '../pages/DriverProfile';
+import UserProfile from '../pages/UserProfile';
 import Profile from '../pages/Profile';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
@@ -34,6 +35,7 @@ class App extends React.Component {
               <Route path="/about" component={About}/>
               <Route path="/contact" component={Contact}/>
               <Route path="/driverprofile" component={DriverProfile}/>
+              <Route path="/userprofile" component={UserProfile}/>
               <Route path="/profile/:_id" component={Profile}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
