@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import { Offers } from '../../api/offer/Offer';
 
-export function array_to_object(array){
+export function array_to_object(array) {
   return _.map(array, function (key_) { return { key: key_, text: key_, value: key_ }; });
 }
 
