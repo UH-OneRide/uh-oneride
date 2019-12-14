@@ -56,13 +56,6 @@ class Find extends React.Component {
             </Card.Group>
           </Container>
         </div>
-/*        <Container>
-          <Header as="h1" textAlign="center">Find a Ride</Header>
-          <Card.Group>
-            {this.props.offers.map((offer, index) => <Offer key={index} offer={offer}/>)}
-          </Card.Group>
-        </Container>
- */
     );
   }
 }

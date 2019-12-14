@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, Image, Segment, Button, Header, Icon, Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
