@@ -18,6 +18,7 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import Admin from '../pages/Admin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -34,6 +35,7 @@ class App extends React.Component {
               <Route path="/find" component={Find}/>
               <Route path="/about" component={About}/>
               <Route path="/contact" component={Contact}/>
+              <Route path="/admin" component={Admin}/>
               <Route path="/driverprofile" component={DriverProfile}/>
               <Route path="/userprofile" component={UserProfile}/>
               <Route path="/profile/:_id" component={Profile}/>
