@@ -3,23 +3,19 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /** Define a Mongo collection to hold the data. */
-const Offers = new Mongo.Collection('Offers');
+const Drivers = new Mongo.Collection('Drivers');
 
 /** Define a schema to specify the structure of each document in the collection. */
-const OfferSchema = new SimpleSchema({
-  start: String,
-  destination: String,
-  startDate: Date,
-  endDate: Date,
-  days: { type: Object, blackbox: true },
-//  arrivalTime: String,
-  passengers: Number,
-  price: Number,
+const DriverSchema = new SimpleSchema({
   ownerID: String,
+  brand: String,
+  model: String,
+  type: String,
+  year: String,
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
-Offers.attachSchema(OfferSchema);
+Drivers.attachSchema(DriverSchema);
 
 /** Make the collection and schema available to other code. */
-export { Offers, OfferSchema };
+export { Drivers, DriverSchema };

@@ -12,9 +12,10 @@ const OfferSchema = new SimpleSchema({
   startDate: Date,
   endDate: Date,
   days: { type: Object, blackbox: true },
-//  arrivalTime: String,
+  arrivalTime: String,
   passengers: Number,
   price: Number,
+  description: String,
   ownerID: String,
 }, { tracker: Tracker });
 

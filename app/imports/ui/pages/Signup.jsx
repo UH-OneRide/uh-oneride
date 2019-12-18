@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { Container, Form, Grid, Header, Message, Segment, Icon } from 'semantic-ui-react';
+import { Container, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
-import { Users } from '../../api/user/User';
+import { Meteor } from 'meteor/meteor';
+import { UserInfo } from '../../api/user/User';
+
 
 /**
  * Signup component is similar to signin component, but we create a new user instead.
@@ -33,28 +35,34 @@ class Signup extends React.Component {
   /** Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   submit = () => {
     const { email, password, firstName, lastName, job, hobbies, image } = this.state;
-    const { isDriver, isAdmin } = false;
-    console.log(this.state);
-    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
+    Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
-        console.log('apple');
+        console.log(err);
         this.setState({ error: err.reason });
       } else {
-        Users.insert(
-            { email, password, firstName, lastName, job, hobbies, image, userID, isDriver, isAdmin }, (err1) => {
-          if (err) {
-            console.log('pen');
-            console.log(err1.reason);
-            this.setState({ error: err.reason });
-          } else {
-            this.setState({ error: '', redirectToReferer: true });
-          }
-        });
+        this.setState({ error: '', redirectToReferer: true });
       }
     });
-  }
+    Meteor.setTimeout(function () {
+      UserInfo.insert({
+        email,
+        firstName,
+        lastName,
+        job,
+        hobbies,
+        image,
+        userID: Meteor.userId(),
+        isDriver: false,
+        isAdmin: false,
+      }, (err) => {
+        if (err) {
+          this.setState({ error: err.reason });
+        }
+      });
+      }, 5000);
+  };
 
-  /** Display the signu p form. Redirect to add page after successful registration and login. */
+  /** Display the signup form. Redirect to add page after successful registration and login. */
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     // if correct authentication, redirect to from: page instead of signup screen

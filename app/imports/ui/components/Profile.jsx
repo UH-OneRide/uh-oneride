@@ -1,8 +1,21 @@
 import React from 'react';
-import { Container, Grid, Segment, Card, Image, Icon, Header, Button, Table, Divider } from 'semantic-ui-react';
+import {
+  Container,
+  Grid,
+  Segment,
+  Card,
+  Image,
+  Icon,
+  Header,
+  Button,
+  Table,
+  Divider,
+  Comment,
+  Form,
+} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { _ } from 'meteor/underscore';
+import { ProfileCard } from './ProfileCard';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 export class Profile extends React.Component {
@@ -10,33 +23,19 @@ export class Profile extends React.Component {
     return (
         <div className="content">
           <Container className="content-container">
-            <Grid verticalAlign='middle' textAlign='center' container>
+            <Grid verticalAlign='top' textAlign='center' container>
               <Grid.Row>
                 <Grid.Column width={5} verticalAlign='top'>
-                  <Card verticalAlign='top'>
-                    <Image src='https://react.semantic-ui.com/images/avatar/large/steve.jpg' wrapped ui={false}/>
-                    <Card.Content>
-                      <Card.Header>Daniel Kim</Card.Header>
-                      <Card.Meta>danielkim@hawaii.edu</Card.Meta>
-                      <Card.Description>
-                        Computer Science, Junior
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <a>
-                        <Button positive><Icon name='mail'/>Send an Email</Button>
-                      </a>
-                    </Card.Content>
-                  </Card>
+                  <ProfileCard userID={this.props.userID}/>
                 </Grid.Column>
 
                 <Grid.Column width={11} textAlign='left'>
                   <Segment attached className="padding-30">
-                    <Image src='/images/car-image.jpg' verticalAlign='middle' size='tiny' circular/>
-                    <span className='header-location' size='large'>Hawaii Kai <Icon name='arrow right'/> UH Manoa</span>
+                    <Image src='/images/car-image.jpg' verticalAlign='middle' size='tiny' circular />
+                    <span className='header-location' size='large'>Hawaii Kai <Icon name='arrow right' /> UH Manoa (Round Trip)</span>
                     <Divider horizontal>
                       <Header as='h4'>
-                        <Icon name='calendar alternate'/>
+                        <Icon name='calendar alternate' />
                         SCHEDULE AND PICK-UP INFO
                       </Header>
                     </Divider>
@@ -67,7 +66,7 @@ export class Profile extends React.Component {
 
                     <Divider horizontal>
                       <Header as='h4'>
-                        <Icon name='car'/>
+                        <Icon name='car' />
                         CAR INFO
                       </Header>
                     </Divider>
@@ -82,27 +81,81 @@ export class Profile extends React.Component {
                           <Table.Cell>Corolla</Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                          <Table.Cell>Year</Table.Cell>
-                          <Table.Cell>2015</Table.Cell>
+                          <Table.Cell>Type</Table.Cell>
+                          <Table.Cell>Sedan</Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                          <Table.Cell>Number of Seats</Table.Cell>
-                          <Table.Cell>5</Table.Cell>
+                          <Table.Cell>Year</Table.Cell>
+                          <Table.Cell>2015</Table.Cell>
                         </Table.Row>
                       </Table.Body>
                     </Table>
 
                     <Divider horizontal>
                       <Header as='h4'>
-                        <Icon name='commenting'/>
-                        Comment
+                        <Icon name='commenting' />
+                        Description
                       </Header>
                     </Divider>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                      in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </Segment>
+                  <br/>
+                  <Segment attached className="padding-30">
+                    <Comment.Group minimal>
+                      <Header as='h3' dividing>
+                        Comments
+                      </Header>
+
+                      <Comment>
+                        <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+                        <Comment.Content>
+                          <Comment.Author as='a'>Matt</Comment.Author>
+                          <Comment.Metadata>
+                            <span>Today at 5:42PM</span>
+                          </Comment.Metadata>
+                          <Comment.Text>How artistic!</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+
+                      <Comment>
+                        <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
+                        <Comment.Content>
+                          <Comment.Author as='a'>Elliot Fu</Comment.Author>
+                          <Comment.Metadata>
+                            <span>Yesterday at 12:30AM</span>
+                          </Comment.Metadata>
+                          <Comment.Text>This has been very useful for my research. Thanks as well!
+                          </Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+
+                      <Comment>
+                        <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+                        <Comment.Content>
+                          <Comment.Author as='a'>Jenny Hess</Comment.Author>
+                          <Comment.Metadata>
+                            <span>Just now</span>
+                          </Comment.Metadata>
+                          <Comment.Text>Elliot you are always so right :)</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+
+                      <Comment>
+                        <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
+                        <Comment.Content>
+                          <Comment.Author as='a'>Joe Henderson</Comment.Author>
+                          <Comment.Metadata>
+                            <span>5 days ago</span>
+                          </Comment.Metadata>
+                          <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+
+                      <Form reply>
+                        <Form.TextArea />
+                        <Button content='Add a Comment' labelPosition='left' icon='edit' primary />
+                      </Form>
+                    </Comment.Group>
                   </Segment>
                 </Grid.Column>
               </Grid.Row>
@@ -116,8 +169,8 @@ export class Profile extends React.Component {
 
 /** Require a document to be passed to this component. */
 Profile.propTypes = {
-  userID: PropTypes.string.isRequired,
-  offer: PropTypes.object,
+  userID: PropTypes.object.isRequired,
+  offer: PropTypes.array,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

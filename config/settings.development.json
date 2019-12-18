@@ -1,7 +1,19 @@
 {
   "defaultAccounts": [
-    { "name": "john", "email": "admin@foo.com", "password": "changeme", "role": ["admin"] },
-    { "name": "admin", "email": "john@foo.com", "password": "changeme" }
+    {
+      "email": "admin@foo.com",
+      "password": "OrangeMonkeyEagle",
+      "firstName": "Admin",
+      "lastName": "1",
+      "job": "Computer Science Student",
+      "hobbies": "Surfing, Watching Netflix",
+      "image": "https://www.logocowboy.com/wp-content/uploads/2016/02/meteor3.png",
+      "isDriver": "true",
+      "isAdmin": "true",
+      "role": [
+        "admin"
+      ]
+    }
   ],
 
   "defaultData": [

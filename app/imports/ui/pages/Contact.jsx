@@ -1,33 +1,36 @@
 import React from 'react';
-import { Container, Form, Input, TextArea, Header, Segment } from 'semantic-ui-react';
-import { Contacts, ContactSchema } from '/imports/api/contact/Contact';
+import { Container, Form, TextArea, Header, Segment } from 'semantic-ui-react';
+import { Contacts } from '/imports/api/contact/Contact';
+import { withTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
 import { Meteor } from 'meteor/meteor';
 
-import { array_to_object } from './Offer';
+import PropTypes from 'prop-types';
+import { array_to_object } from './AddOffer';
+import { UserInfo } from '../../api/user/User';
 
 const contactCategories = [
     'Rider/Driver Complaint',
     'Found Bug',
     'Other',
-]
+];
 const categories = array_to_object(contactCategories);
 
 const contactResponses = [
     'Email Response',
     'No Response Required',
-]
+];
 const responses = array_to_object(contactResponses);
 
 class Contact extends React.Component {
   state = {
-    name: (Meteor.user() ? (Meteor.user().username) : ''),
-    email: (Meteor.user() ? (Meteor.user().emails[0].address) : ''),
+    name: (Meteor.user() ? (this.props.user.firstName) : ''),
+    email: (Meteor.user() ? (this.props.user.email) : ''),
     category: '',
     subject: '',
     description: '',
-    response: '',
+    emailResponse: '',
   };
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
@@ -74,6 +77,7 @@ class Contact extends React.Component {
                 />
                 <Form.Input
                     style={{ height: 200 }}
+                    onChange={this.handleChange}
                     id='form-textarea-control-opinion'
                     label='Description'
                     control={TextArea}
@@ -83,7 +87,7 @@ class Contact extends React.Component {
                 <Form.Dropdown
                     onChange={this.handleChange}
                     label='Response'
-                    name={ 'response' }
+                    name={ 'emailResponse' }
                     options={responses}
                     selection
                     placeholder={'Would you like a response?'}
@@ -97,21 +101,31 @@ class Contact extends React.Component {
   }
 
   /** On submit, insert the data. */
-  submit(data, formRef) {
+  submit = () => {
     console.log(this.state);
     const { name, email, category, subject, description, emailResponse } = this.state;
-    const owner = Meteor.user()._Id;
-    Contacts.insert({ name, email, subject, category,  description, emailResponse, owner },
+    const ownerID = this.props.user.userID;
+    Contacts.insert({ name, email, subject, category, description, emailResponse, ownerID },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Item added successfully', 'success');
-            formRef.reset();
           }
         });
     }
 
 }
 
-export default (Contact);
+Contact.propTypes = {
+  user: PropTypes.object,
+};
+
+export default withTracker(() => {
+  // Get access to Stuff documents.
+  const subscription = Meteor.subscribe('UserInfo');
+  return {
+    user: Meteor.user() ? UserInfo.find({ userID: Meteor.userId() }).fetch()[0] : { userID: 'Guest' },
+    ready: subscription.ready(),
+  };
+})(Contact);

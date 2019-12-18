@@ -4,24 +4,32 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { _ } from 'meteor/underscore';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Loader } from 'semantic-ui-react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import Offer from '../pages/Offer';
+import AddOffer from '../pages/AddOffer';
 import Find from '../pages/Find';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
-import DriverProfile from '../pages/DriverProfile';
-import UserProfile from '../pages/UserProfile';
-import Profile from '../pages/Profile';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import OfferView from '../pages/OfferView';
+import UserProfile from '../pages/UserProfile';
+import EditOffer from '../pages/EditOffer';
+import ContactView from '../pages/ContactView';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  }
+
+  renderPage() {
     return (
         <Router>
           <div>
@@ -30,13 +38,14 @@ class App extends React.Component {
               <Route exact path="/" component={Landing}/>
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
-              <Route path="/offer" component={Offer}/>
+              <Route path="/newoffer" component={AddOffer}/>
               <Route path="/find" component={Find}/>
               <Route path="/about" component={About}/>
-              <Route path="/contact" component={Contact}/>
-              <Route path="/driverprofile" component={DriverProfile}/>
-              <Route path="/userprofile" component={UserProfile}/>
-              <Route path="/profile/:_id" component={Profile}/>
+              <Route path="/newcontact" component={Contact}/>
+              <Route path="/profile/:_id" component={UserProfile}/>
+              <Route path="/offer/:_id" component={OfferView}/>
+              <Route path="/editoffer/:_id" component={EditOffer}/>
+              <AdminProtectedRoute path="/viewcontacts" component={ContactView}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
             </Switch>
@@ -96,4 +105,15 @@ AdminProtectedRoute.propTypes = {
   location: PropTypes.object,
 };
 
-export default App;
+App.propTypes = {
+  ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+  const names = ['Offers', 'UserInfo'];
+  const collections = _.map(names, function (collection) { return Meteor.subscribe(collection); });
+  const ready = _.every(collections, function (collection) { return collection.ready(); });
+  return {
+    ready: ready,
+  };
+})(App);
